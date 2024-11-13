@@ -1,7 +1,7 @@
 <template>
     <div class="flex  justify-center p-2">
         <div class="flex items-center gap-2"> <img src="../assets/logo.jpg" alt="" height="50" width="50">
-            <span class="font-bold"> Study Name</span>
+            <span class="font-bold"> Study Name here</span>
         </div>
     </div>
     
@@ -48,7 +48,6 @@
 
 <script setup>
 import { ref } from 'vue';
-
 import {
     ProfileOutlined,
     CheckSquareOutlined,
