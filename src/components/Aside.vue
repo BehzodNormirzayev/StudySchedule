@@ -4,45 +4,44 @@
             <span class="font-bold"> Study Name here</span>
         </div>
     </div>
-    
+
     <a-menu mode="inline" default-selected-keys="['1']">
-        <a-menu-item key="1">
-            <ProfileOutlined />
-            <span>Уроки</span>
-            <a-badge count="6" style="margin-left: 8px" />
-        </a-menu-item>
 
-        <a-menu-item key="2">
-            <CheckSquareOutlined />
-            <span>Задачи</span>
-            <a-badge count="9" style="margin-left: 8px; background-color: #52c41a" />
-            <a-badge count="407" style="margin-left: 4px; background-color: #f5222d" />
-        </a-menu-item>
+        <router-link to="lessons">
+            <a-menu-item key="1" :class="{ 'ant-menu-item-selected': $route.path === '/dashboard/lessons' }">
+                <ProfileOutlined />
+                <span>Уроки</span>
+                <a-badge count="6" style="margin-left: 8px" />
+            </a-menu-item>
+        </router-link>
 
-        <a-menu-item key="3" :class="{ 'ant-menu-item-selected': $route.path === '/client' }">
-            <UserOutlined />
-            <span>Клиенты</span>
-        </a-menu-item>
+        <router-link to="tasks">
+            <a-menu-item key="2" :class="{ 'ant-menu-item-selected': $route.path === '/dashboard/tasks' }">
+                <CheckSquareOutlined />
+                <span>Задачи</span>
+                <a-badge count="9" style="margin-left: 8px; background-color: #52c41a" />
+                <a-badge count="407" style="margin-left: 4px; background-color: #f5222d" />
+            </a-menu-item>
+        </router-link>
 
-        <a-menu-item key="4">
-            <TeamOutlined />
-            <span>Группы</span>
-        </a-menu-item>
 
-        <a-menu-item key="5">
-            <UsergroupAddOutlined />
-            <span>Педагоги</span>
-        </a-menu-item>
 
-        <a-menu-item key="6">
-            <PhoneOutlined />
-            <span>Звонки</span>
-        </a-menu-item>
 
-        <a-menu-item key="7" disabled>
-            <LockOutlined />
-            <span>Доступ в CRM</span>
-        </a-menu-item>
+        <router-link to="clients">
+            <a-menu-item key="3" :class="{ 'ant-menu-item-selected': $route.path === '/dashboard/clients' }">
+                <UserOutlined />
+                <span>Клиенты</span>
+            </a-menu-item>
+        </router-link>
+
+        <RouterLink to="teachers">
+            <a-menu-item key="4" :class="{ 'ant-menu-item-selected': $route.path === '/dashboard/teachers' }">
+                <UsergroupAddOutlined />
+                <span>Педагоги</span>
+            </a-menu-item>
+        </RouterLink>
+
+
     </a-menu>
 </template>
 

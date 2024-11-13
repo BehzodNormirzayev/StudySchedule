@@ -14,7 +14,8 @@
                     <div> Name name</div>
                     <a-avatar size="large">
                         <template #icon>
-                            <img src="../assets/logo.svg" alt="">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRom1dDw4j3-7q2l7hFpioBahr-CTZVBUcUgA&s"
+                                alt="">
                         </template>
                     </a-avatar>
                 </div>

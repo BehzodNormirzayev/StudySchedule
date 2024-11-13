@@ -4,24 +4,67 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/',
-      name: 'home',
-      component: () => import('../pages/home/HomePage.vue'),
+      path: '/login',
+      name: 'Login',
+      component: () => import('@/pages/LoginPage.vue')
     },
     {
-      path: '/login',
-      name: 'login',
-      component: () => import('../pages/LoginPage.vue'),
+      path: '/',
+      name: 'Asosiy sahifa',
+      redirect: "/dashboard"
     },
-    // {
-    //   path: '/about',
-    //   name: 'about',
-    //   // route level code-splitting
-    //   // this generates a separate chunk (About.[hash].js) for this route
-    //   // which is lazy-loaded when the route is visited.
-    //   component: () => import('../views/AboutView.vue'),
-    // },
-  ],
+
+    {
+      path: '/dashboard',
+      name: 'dashboard',
+      component: () => import('@/pages/dashboard/DashboardPage.vue'),
+      children: [
+        {
+          path: '',
+          redirect: 'dashboard/lessons'
+        },
+        {
+          path: 'lessons',
+          name: 'lessons',
+          component: () => import('@/pages/dashboard/lessons/LessonsPage.vue'),
+        },
+        {
+          path: 'clients',
+          name: 'clients',
+          component: () => import("@/pages/dashboard/clients/ClientsPage.vue")
+        },
+        {
+          path: 'teachers',
+          name: 'teachers',
+          component: () => import("@/pages/dashboard/teachers/TeachersPage.vue")
+        },
+        {
+          path: 'tasks',
+          name: 'tasks',
+          component: () => import("@/pages/dashboard/tasks/TasksPage.vue")
+        },
+        // path ichida 500 qaytarishga 
+        {
+          path: '500',
+          component: () => import('@/pages/_500.vue'),
+          name: 'dashboard_internal_server_error'
+        },
+      ]
+    },
+    // globalno 500 qaytarishga 
+    {
+      path: '/500',
+      component: () => import('@/pages/_500.vue'),
+      name: 'internal_server_error'
+    },
+    {
+      path: '/404',
+      component: () => import('@/pages/_404.vue'),
+      name: 'not_found_main'
+    },
+
+  ]
 })
 
 export default router
+
