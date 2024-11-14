@@ -18,14 +18,11 @@
         <router-link to="tasks">
             <a-menu-item key="2" :class="{ 'ant-menu-item-selected': $route.path === '/dashboard/tasks' }">
                 <CheckSquareOutlined />
-                <span>Задачи</span>
-                <a-badge count="9" style="margin-left: 8px; background-color: #52c41a" />
-                <a-badge count="407" style="margin-left: 4px; background-color: #f5222d" />
+                <span>Задачи</span> 
+                <a-badge count="25" class="ml-2" />
+                <a-badge count="407" :number-style="{ backgroundColor: '#52c41a' }" />
             </a-menu-item>
         </router-link>
-
-
-
 
         <router-link to="clients">
             <a-menu-item key="3" :class="{ 'ant-menu-item-selected': $route.path === '/dashboard/clients' }">

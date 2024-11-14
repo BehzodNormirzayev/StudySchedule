@@ -6,7 +6,7 @@
     <header class=" bg-white">
         <a-row>
             <a-col :span="12">
-                <a-input type="text" size="large" placeholder="Поиск клиента"> </a-input>
+                <a-input type="text" size="large" class="w-1/2" placeholder="Поиск клиента"> </a-input>
             </a-col>
 
             <a-col :span="12" class="flex justify-end">
