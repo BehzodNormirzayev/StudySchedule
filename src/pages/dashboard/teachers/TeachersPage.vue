@@ -8,7 +8,19 @@
 
     <!-- table -->
     <div>
-        <a-table :columns="columns" :data-source="teachersList" rowKey="id" />
+        <a-table :columns="columns" :data-source="teachersList" rowKey="id">
+            <template #bodyCell="{ column, record }">
+                <template v-if="column.key === 'fio'">
+                    <router-link v-if="!regionId" :to="``">
+                        {{ record[column.key] }}
+                    </router-link>
+
+                </template>
+
+            </template>
+
+        </a-table>
+
     </div>
 </template>
 

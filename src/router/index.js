@@ -31,7 +31,7 @@ const router = createRouter({
         {
           path: 'clients',
           name: 'clients',
-          component: () => import("@/pages/dashboard/clients/ClientsPage.vue")
+          component: () => import("@/pages/dashboard/classes/ClassesPage.vue")
         },
         {
           path: 'teachers',
@@ -39,9 +39,14 @@ const router = createRouter({
           component: () => import("@/pages/dashboard/teachers/TeachersPage.vue")
         },
         {
+          path: 'teacher-info',
+          name: 'teacher info',
+          component: () => import("@/pages/dashboard/teachers/components/TeacherInfo.vue")
+        },
+        {
           path: 'tasks',
           name: 'tasks',
-          component: () => import("@/pages/dashboard/tasks/TasksPage.vue")
+          component: () => import("@/pages/dashboard/messages/MessagesPage.vue")
         },
         // path ichida 500 qaytarishga 
         {
