@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-      <h1>Школьные кабинеты</h1>
+      
   
       <div class="navigation">
         <button
@@ -28,11 +28,26 @@
             <ul class="equipment-list">
               <li v-for="(item, idx) in room.equipment" :key="idx">{{ item }}</li>
             </ul>
+         <!-- Add Equipment Input and Button -->
+         <div class="add-equipment">
+            <input
+              type="text"
+              v-model="newEquipment"
+              class="input-field"
+              placeholder="Добавить оборудование"
+            />
+            <button
+              class="add-button"
+              @click="addEquipment(room.id)"
+            >
+              Добавить
+            </button>
           </div>
         </div>
       </div>
     </div>
-  </template>
+  </div>
+</template>
   
   <script>
   import { ref } from "vue";
@@ -58,7 +73,7 @@
         {
           id: "math",
           name: "Математика",
-          image: "images/math.jpg",
+          image: "https://i0.wp.com/mymathresources.com/wp-content/uploads/2020/07/Virtual-Middle-School-Math-Classroom-Low-Resolution.png?fit=1359%2C800&ssl=1",
           equipmentTitle: "Оборудование кабинета математики:",
           equipment: [
             "Геометрические модели",
@@ -71,7 +86,7 @@
         {
           id: "art",
           name: "ИЗО",
-          image: "images/art.jpg",
+          image: "https://fhai.com/wp-content/uploads/2021/12/4911721-scaled.jpg",
           equipmentTitle: "Оборудование кабинета ИЗО:",
           equipment: [
             "Мольберты",
@@ -84,7 +99,7 @@
         {
           id: "music",
           name: "Музыка",
-          image: "images/music.jpg",
+          image: "https://img.freepik.com/premium-photo/music-classroom-with-instruments-1-generated-by-ai_930337-75.jpg",
           equipmentTitle: "Оборудование кабинета музыки:",
           equipment: [
             "Фортепиано",
@@ -97,7 +112,7 @@
         {
           id: "geography",
           name: "География",
-          image: "images/geography.jpg",
+          image: "https://www.promoteyourschool.co.uk/wp-content/uploads/2021/01/PYS-Cardinal-Wiseman-Humanities-Wall-Art-1.webp",
           equipmentTitle: "Оборудование кабинета географии:",
           equipment: [
             "Глобусы",
@@ -110,7 +125,7 @@
         {
           id: "chemistry",
           name: "Химия",
-          image: "images/chemistry.jpg",
+          image: "https://as1.ftcdn.net/v2/jpg/04/55/66/96/1000_F_455669622_ZYl2BFihZNdCEQmRbA81LE1MPkpZqFCO.jpg",
           equipmentTitle: "Оборудование кабинета химии:",
           equipment: [
             "Лабораторные столы",
@@ -123,7 +138,7 @@
         {
           id: "biology",
           name: "Биология",
-          image: "images/biology.jpg",
+          image: "https://www.crbgroup.com/wp-content/uploads/2019/10/UI-Biology-Labs-01m.jpg",
           equipmentTitle: "Оборудование кабинета биологии:",
           equipment: [
             "Микроскопы",
@@ -136,7 +151,7 @@
         {
           id: "gym",
           name: "Физкультура",
-          image: "images/gym.jpg",
+          image: "https://www.screenflex.com/wp-content/uploads/2011/04/26-Gym-For-Portable-Partitions.jpg",
           equipmentTitle: "Оборудование спортзала:",
           equipment: [
             "Спортивные маты",
@@ -147,7 +162,13 @@
           ],
         },
       ]);
-  
+      const addEquipment = (roomId) => {
+      if (newEquipment.value.trim()) {
+        const room = rooms.value.find((r) => r.id === roomId);
+        room.equipment.push(newEquipment.value);
+        newEquipment.value = ""; // Clear the input field
+      }
+    };
       return {
         activeRoom,
         rooms,
@@ -156,8 +177,9 @@
   };
   </script>
   
-  <style scoped>
-  .container {
+<style scoped lang="scss">
+
+.container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
@@ -180,31 +202,38 @@
   .nav-button {
     padding: 10px 20px;
     border: none;
-    border-radius: 5px;
+    border-radius: 50px;
     background-color: #3498db;
     color: white;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s, transform 0.3s;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   }
   
   .nav-button:hover {
     background-color: #2980b9;
+    transform: translateY(-3px);
   }
   
   .nav-button.active {
     background-color: #2c3e50;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
   }
   
   .classroom {
     display: none;
     background-color: white;
     padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    opacity: 0;
+    transform: translateY(10px);
   }
   
   .classroom.active {
     display: block;
+    opacity: 1;
+    transform: translateY(0);
   }
   
   .classroom-content {
@@ -222,7 +251,12 @@
     width: 100%;
     height: 400px;
     object-fit: cover;
-    border-radius: 5px;
+    border-radius: 12px;
+    transition: transform 0.3s;
+  }
+  
+  .classroom-image img:hover {
+    transform: scale(1.05);
   }
   
   .equipment-list {
@@ -242,5 +276,31 @@
     left: 0;
     color: #3498db;
   }
+  .add-equipment {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.input-field {
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  flex: 1;
+}
+
+.add-button {
+  padding: 8px 12px;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.add-button:hover {
+  background-color: #2980b9;
+}
   </style>
   

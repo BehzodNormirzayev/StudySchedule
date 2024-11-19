@@ -7,6 +7,14 @@
 
     <a-menu mode="inline" default-selected-keys="['1']">
 
+        <router-link to="shedule">
+            <a-menu-item key="1" :class="{ 'ant-menu-item-selected': $route.path === '/dashboard/shedule' }">
+                <ProfileOutlined />
+                <span>Расписания</span>
+                <a-badge count="6" style="margin-left: 8px" />
+            </a-menu-item>
+        </router-link>
+
         <router-link to="lessons">
             <a-menu-item key="1" :class="{ 'ant-menu-item-selected': $route.path === '/dashboard/lessons' }">
                 <ProfileOutlined />
