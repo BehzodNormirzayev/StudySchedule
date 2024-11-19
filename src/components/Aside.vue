@@ -15,15 +15,15 @@
             </a-menu-item>
         </router-link>
 
-        <router-link to="tasks">
-            <a-menu-item key="2" :class="{ 'ant-menu-item-selected': $route.path === '/dashboard/tasks' }">
+        <router-link to="classes">
+            <a-menu-item key="2" :class="{ 'ant-menu-item-selected': $route.path === '/dashboard/classes' }">
                 <CheckSquareOutlined />
                 <span>Классы</span>
             </a-menu-item>
         </router-link>
 
-        <router-link to="clients">
-            <a-menu-item key="3" :class="{ 'ant-menu-item-selected': $route.path === '/dashboard/clients' }">
+        <router-link to="messages">
+            <a-menu-item key="3" :class="{ 'ant-menu-item-selected': $route.path === '/dashboard/messages' }">
                 <UserOutlined />
                 <span>Сообшение</span>
             </a-menu-item>
