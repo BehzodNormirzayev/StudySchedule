@@ -6,10 +6,12 @@ import vueDevTools from 'vite-plugin-vue-devtools'
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [
-    vue(),
-    vueDevTools(),
-  ],
+  plugins: [vue()],
+  resolve: {
+    alias: {
+      '@': '/src',
+    },
+  },
 
   server: {
     port: 3000, // for run front
@@ -33,3 +35,5 @@ export default defineConfig({
     },
   },
 })
+
+

@@ -1,68 +1,53 @@
 <template>
-  <div class="flex h-screen bg-gray-50">
-    <!-- Sidebar -->
-    <div class="w-80 border-r bg-white">
-      <div class="p-4 border-b">
-        <div class="flex items-center space-x-2 mb-4">
-          <a-input placeholder="Search" class="bg-gray-50">
-            <template #prefix>
-              <SearchIcon class="h-4 w-4 text-gray-400" />
-            </template>
-          </a-input>
-        </div>
-        <div class="flex justify-between items-center">
-          <h2 class="text-lg font-semibold">Conversations</h2>
-          <div class="flex space-x-2">
-            <a-button type="text">
-              <template #icon><SearchIcon class="h-4 w-4" /></template>
-            </a-button>
-            <a-button type="text">
-              <template #icon><PlusIcon class="h-4 w-4" /></template>
-            </a-button>
+  <div class="h-screen bg-white flex text-gray-800">
+    <!-- Left Sidebar -->
+    <div class="w-80 border-r bg-gray-50 flex flex-col">
+      <div class="p-4">
+        <div class="flex justify-between items-center mb-4">
+          <h1 class="text-xl font-semibold">Messenger</h1>
+          <div class="flex gap-2">
+            <button class="p-2 hover:bg-gray-200 rounded-full">
+              <Search class="w-5 h-5" />
+            </button>
+            <button class="p-2 bg-blue-500 text-white rounded-full">
+              <Plus class="w-5 h-5" />
+            </button>
           </div>
         </div>
-      </div>
 
-      <div class="overflow-y-auto h-full">
-        <!-- Groups Section -->
-        <div class="p-4">
-          <h3 class="text-sm font-medium text-gray-500 mb-2">Groups</h3>
-          <div
-            v-for="group in groups"
-            :key="group.id"
-            class="flex items-center p-2 hover:bg-gray-50 rounded-lg cursor-pointer"
-          >
-            <a-avatar :size="40" class="bg-green-100 text-green-600">
-              {{ group.name[0] }}
-            </a-avatar>
-            <div class="ml-3 flex-1">
-              <div class="flex justify-between">
-                <span class="font-medium">{{ group.name }}</span>
-                <span class="text-sm text-gray-400">12:04</span>
-              </div>
-              <p class="text-sm text-gray-500 truncate">{{ group.lastMessage }}</p>
+        <div class="space-y-4">
+          <!-- Groups Section -->
+          <div>
+            <div class="flex items-center gap-2 text-blue-500 mb-2">
+              <ChevronDown class="w-4 h-4" />
+              <span>Groups</span>
             </div>
-            <a-badge v-if="group.unread" :count="group.unread" class="ml-2" />
+            <div class="space-y-2">
+              <ChatItem
+                v-for="(chat, index) in groups"
+                :key="index"
+                :title="chat.title"
+                :message="chat.message"
+                :unread="chat.unread"
+                :isGroup="true"
+                :active="chat.active"
+              />
+            </div>
           </div>
-        </div>
 
-        <!-- Direct Messages Section -->
-        <div class="p-4">
-          <h3 class="text-sm font-medium text-gray-500 mb-2">Direct Messages</h3>
-          <div
-            v-for="dm in directMessages"
-            :key="dm.id"
-            class="flex items-center p-2 hover:bg-gray-50 rounded-lg cursor-pointer"
-          >
-            <a-avatar :size="40">
-              <template #icon><UserIcon /></template>
-            </a-avatar>
-            <div class="ml-3 flex-1">
-              <div class="flex justify-between">
-                <span class="font-medium">{{ dm.name }}</span>
-                <span class="text-sm text-gray-400">12:04</span>
-              </div>
-              <p class="text-sm text-gray-500 truncate">{{ dm.message }}</p>
+          <!-- Direct Messages Section -->
+          <div>
+            <div class="flex items-center gap-2 text-blue-500 mb-2">
+              <ChevronDown class="w-4 h-4" />
+              <span>Direct Messages</span>
+            </div>
+            <div class="space-y-2">
+              <ChatItem
+                v-for="(user, index) in directMessages"
+                :key="index"
+                :title="user.name"
+                :message="'Hi! Please, change the statu...'"
+              />
             </div>
           </div>
         </div>
@@ -72,159 +57,131 @@
     <!-- Main Chat Area -->
     <div class="flex-1 flex flex-col">
       <!-- Chat Header -->
-      <div class="p-4 border-b bg-white flex justify-between items-center">
-        <div class="flex items-center">
-          <a-avatar :size="40">
-            <template #icon><UserIcon /></template>
-          </a-avatar>
-          <div class="ml-3">
-            <h2 class="font-semibold">Oscar Holloway</h2>
-            <p class="text-sm text-gray-500">UI/UX Designer</p>
+      <div class="h-16 border-b flex items-center justify-between px-4">
+        <div class="flex items-center gap-4">
+          <div class="w-10 h-10 bg-emerald-500 rounded-lg flex items-center justify-center">
+            <Folder class="w-6 h-6 text-white" />
+          </div>
+          <div>
+            <h2 class="font-semibold">Medical App Team</h2>
+            <p class="text-sm text-gray-500">6 members</p>
           </div>
         </div>
-        <div class="flex items-center space-x-2">
-          <a-button type="text">
-            <template #icon><SearchIcon class="h-4 w-4" /></template>
-          </a-button>
-          <a-button type="text">
-            <template #icon><PushPinIcon class="h-4 w-4" /></template>
-          </a-button>
-          <a-button type="text">
-            <template #icon><MoreVerticalIcon class="h-4 w-4" /></template>
-          </a-button>
+        <div class="flex items-center gap-2">
+          <button class="p-2 hover:bg-gray-100 rounded-full">
+            <Search class="w-5 h-5" />
+          </button>
+          <button class="p-2 hover:bg-gray-100 rounded-full">
+            <Bell class="w-5 h-5" />
+          </button>
+          <button class="p-2 hover:bg-gray-100 rounded-full">
+            <MoreVertical class="w-5 h-5" />
+          </button>
         </div>
       </div>
 
       <!-- Messages Area -->
-      <div class="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50">
-        <div class="text-center">
-          <span class="text-sm text-gray-500 bg-white px-3 py-1 rounded-full">
-            Friday, September 8
-          </span>
-        </div>
-
-        <div
-          v-for="message in messages"
-          :key="message.id"
-          :class="['flex', message.sender === 'You' ? 'justify-end' : 'justify-start']"
+      <div class="flex-1 overflow-y-auto p-4 space-y-4">
+        <Message
+          v-for="(message, index) in messages"
+          :key="index"
+          :sender="message.sender"
+          :timestamp="message.timestamp"
+          :isOwn="message.isOwn"
         >
-          <div :class="['flex', message.sender === 'You' ? 'flex-row-reverse' : 'flex-row', 'items-start max-w-2xl']">
-            <a-avatar v-if="message.sender !== 'You'" :size="32" class="mt-1">
-              <template #icon><UserIcon /></template>
-            </a-avatar>
-            <div :class="['mx-2', message.sender === 'You' ? 'items-end' : 'items-start']">
-              <div class="flex items-center mb-1">
-                <span class="text-sm text-gray-500">{{ message.sender }}</span>
-                <span class="text-xs text-gray-400 ml-2">{{ message.time }}</span>
-              </div>
-              <div
-                :class="[
-                  'rounded-lg p-3',
-                  message.sender === 'You'
-                    ? 'bg-blue-500 text-white'
-                    : 'bg-white text-gray-800'
-                ]"
-              >
-                {{ message.message }}
-                <div
-                  v-if="message.attachment"
-                  class="mt-2 bg-blue-50 text-blue-500 rounded p-2 flex items-center"
-                >
-                  <PaperclipIcon class="h-4 w-4 mr-2" />
-                  {{ message.attachment }}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+          <template #default>
+            <p>{{ message.text }}</p>
+          </template>
+        </Message>
       </div>
 
       <!-- Message Input -->
-      <div class="p-4 bg-white border-t">
-        <div class="flex items-center space-x-2">
-          <a-button type="text">
-            <template #icon><PaperclipIcon class="h-4 w-4" /></template>
-          </a-button>
-          <a-input v-model:value="newMessage" placeholder="Type your message here..." class="flex-1" />
-          <a-button type="text">
-            <template #icon><SmileIcon class="h-4 w-4" /></template>
-          </a-button>
-          <a-button type="primary" class="bg-blue-500 hover:bg-blue-600" @click="sendMessage">
-            <template #icon><SendIcon class="h-4 w-4" /></template>
-          </a-button>
+      <div class="border-t p-4">
+        <div class="flex items-center gap-2 bg-gray-50 rounded-lg p-2">
+          <button class="p-2 hover:bg-gray-200 rounded-full">
+            <Paperclip class="w-5 h-5" />
+          </button>
+          <button class="p-2 hover:bg-gray-200 rounded-full">
+            <Link class="w-5 h-5" />
+          </button>
+          <button class="p-2 hover:bg-gray-200 rounded-full">
+            <AtSign class="w-5 h-5" />
+          </button>
+          <input
+            type="text"
+            placeholder="Type your message here..."
+            class="flex-1 bg-transparent outline-none"
+            v-model="message"
+          />
+          <button class="p-2 hover:bg-gray-200 rounded-full">
+            <Smile class="w-5 h-5" />
+          </button>
+          <button class="p-2 bg-blue-500 text-white rounded-full">
+            <Send class="w-5 h-5" />
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Sidebar -->
+    <div class="w-80 border-l">
+      <div class="p-4">
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="font-semibold">Details</h2>
+          <button class="p-2 hover:bg-gray-100 rounded-full">
+            <X class="w-5 h-5" />
+          </button>
+        </div>
+
+        <div class="space-y-6">
+          <div>
+            <h3 class="font-medium mb-2">Members</h3>
+            <div class="space-y-2">
+              <MemberItem
+                v-for="(member, index) in members"
+                :key="index"
+                :name="member.name"
+                :isYou="member.isYou"
+              />
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </template>
 
-<script>
-import { defineComponent, ref } from 'vue'
-import {
-  SearchIcon,
-  PlusIcon,
-  UserIcon,
-  PaperclipIcon,
-  SmileIcon,
-  SendIcon,
-  MoreVerticalIcon,
-  PushPinIcon
-} from '@heroicons/vue/outline'
+<script setup>
+import { ref } from 'vue';
+import { Search, Plus, ChevronDown, Bell, MoreVertical, Paperclip, Link, AtSign, Smile, Send, X, Folder } from 'lucide-vue-next';
 
-export default defineComponent({
-  name: 'MessengerApp',
-  
-  components: {
-    SearchIcon,
-    PlusIcon,
-    UserIcon,
-    PaperclipIcon,
-    SmileIcon,
-    SendIcon,
-    MoreVerticalIcon,
-    PushPinIcon
-  },
+const message = ref('');
 
-  setup() {
-    const groups = ref([
-      { id: 1, name: 'Medical App Team', lastMessage: 'Caroline: Hi guys! I\'ve shared yo...', unread: 12 },
-      { id: 2, name: 'Food Delivery Service', lastMessage: 'Olive: Hi guys! I\'ve shared yo...', unread: 2 }
-    ])
+const directMessages = [
+  { id: 1, name: 'Garrett Watson' },
+  { id: 2, name: 'Caroline Santos' },
+  { id: 3, name: 'Leon Nunez' },
+  { id: 4, name: 'Oscar Holloway' },
+  { id: 5, name: 'Ralph Harris' }
+];
 
-    const directMessages = ref([
-      { id: 1, name: 'Garrett Watson', message: 'Hi! Please, change the statu...' },
-      { id: 2, name: 'Caroline Santos', message: 'Hi! Please, change the statu...' },
-      { id: 3, name: 'Leon Nunez', message: 'Hi! Please, change the statu...' },
-      { id: 4, name: 'Oscar Holloway', message: 'Hi! Please, change the statu...' },
-      { id: 5, name: 'Ralph Harris', message: 'Hi! Please, change the statu...' }
-    ])
+const members = [
+  { id: 1, name: 'Evan Yates', isYou: true },
+  { id: 2, name: 'Blake Silva' },
+  { id: 3, name: 'Olive Dixon' },
+  { id: 4, name: 'Ellen Wong' },
+  { id: 5, name: 'Lily Bradley' },
+  { id: 6, name: 'Gerald Ingram' }
+];
 
-    const messages = ref([
-      { id: 1, sender: 'You', message: 'Hey there!', time: '10:42' },
-      { id: 2, sender: 'Oscar Holloway', message: 'Hello! How are you?', time: '10:43' },
-      { id: 3, sender: 'You', message: 'All good here. You?', time: '10:44' }
-    ])
+const groups = [
+  { title: 'Medical App Team', message: 'Caroline: Hi guys! I\'ve shared yo...', unread: 12, active: true },
+  { title: 'Food Delivery Service', message: 'Olive: Hi guys! I\'ve shared yo...', unread: 1 }
+];
 
-    const newMessage = ref('')
-
-    const sendMessage = () => {
-      if (newMessage.value.trim()) {
-        messages.value.push({ id: messages.value.length + 1, sender: 'You', message: newMessage.value, time: '12:00' })
-        newMessage.value = ''
-      }
-    }
-
-    return {
-      groups,
-      directMessages,
-      messages,
-      newMessage,
-      sendMessage
-    }
-  }
-})
+const messages = [
+  { sender: 'Olive Dixon', timestamp: '12:04 AM', text: 'Hi, Evan! Nice to meet you too', isOwn: false },
+  { sender: 'You', timestamp: '12:15 AM', text: 'Hi, Oscar! Nice to meet you', isOwn: true },
+  { sender: 'Olive Dixon', timestamp: '12:04 AM', text: 'Hi! Please, change the status in this task', isOwn: false }
+];
 </script>
-
-<style scoped>
-/* Add any necessary styles here */
-</style>

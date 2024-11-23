@@ -1,13 +1,15 @@
 <template>
     <div class="container">
       
-  
-      <div class="navigation">
+          
+    <button v-show="!isOpen" @click="activeRoom = ''; isOpen= true"><img src="https://cdn-icons-png.flaticon.com/512/10944/10944712.png" width="40px" height="40px" alt="icon"></button>
+
+      <div v-show="isOpen" class="navigation">
         <button
           v-for="room in rooms"
           :key="room.id"
           :class="['nav-button', { active: activeRoom === room.id }]"
-          @click="activeRoom = room.id"
+          @click="activeRoom = room.id; isOpen= false"
         >
           {{ room.name }}
         </button>
@@ -55,11 +57,12 @@
   export default {
     name: "SchoolRooms",
     setup() {
-      const activeRoom = ref("physics");
+      const activeRoom = ref("");
+      const isOpen = true;
       const rooms = ref([
         {
           id: "physics",
-          name: "Физика",
+          name: "Кабинет Физики",
           image: "https://www.digis.kz/upload/iblock/4aa/dsh7el7hr9q8s6vlgq14hn3g1qhv9q3z/%D0%9A%D1%83%D0%BF%D0%B8%D1%82%D1%8C_%D0%BA%D0%B0%D0%B1%D0%B8%D0%BD%D0%B5%D1%82_%D1%84%D0%B8%D0%B7%D0%B8%D0%BA%D0%B8_%D0%B2_%D0%9A%D0%B0%D0%B7%D0%B0%D1%85%D1%81%D1%82%D0%B0%D0%BD%D0%B5.png",
           equipmentTitle: "Оборудование кабинета физики:",
           equipment: [
@@ -72,7 +75,7 @@
         },
         {
           id: "math",
-          name: "Математика",
+          name: "Кабинет Математик",
           image: "https://i0.wp.com/mymathresources.com/wp-content/uploads/2020/07/Virtual-Middle-School-Math-Classroom-Low-Resolution.png?fit=1359%2C800&ssl=1",
           equipmentTitle: "Оборудование кабинета математики:",
           equipment: [
@@ -85,7 +88,7 @@
         },
         {
           id: "art",
-          name: "ИЗО",
+          name: "Кабинет ИЗО",
           image: "https://fhai.com/wp-content/uploads/2021/12/4911721-scaled.jpg",
           equipmentTitle: "Оборудование кабинета ИЗО:",
           equipment: [
@@ -98,7 +101,7 @@
         },
         {
           id: "music",
-          name: "Музыка",
+          name: "Кабинет Музыки",
           image: "https://img.freepik.com/premium-photo/music-classroom-with-instruments-1-generated-by-ai_930337-75.jpg",
           equipmentTitle: "Оборудование кабинета музыки:",
           equipment: [
@@ -111,7 +114,7 @@
         },
         {
           id: "geography",
-          name: "География",
+          name: "Кабинет Географии",
           image: "https://www.promoteyourschool.co.uk/wp-content/uploads/2021/01/PYS-Cardinal-Wiseman-Humanities-Wall-Art-1.webp",
           equipmentTitle: "Оборудование кабинета географии:",
           equipment: [
@@ -124,7 +127,7 @@
         },
         {
           id: "chemistry",
-          name: "Химия",
+          name: "Кабинет Химиии",
           image: "https://as1.ftcdn.net/v2/jpg/04/55/66/96/1000_F_455669622_ZYl2BFihZNdCEQmRbA81LE1MPkpZqFCO.jpg",
           equipmentTitle: "Оборудование кабинета химии:",
           equipment: [
@@ -137,7 +140,7 @@
         },
         {
           id: "biology",
-          name: "Биология",
+          name: "Кабинет Биологии",
           image: "https://www.crbgroup.com/wp-content/uploads/2019/10/UI-Biology-Labs-01m.jpg",
           equipmentTitle: "Оборудование кабинета биологии:",
           equipment: [
@@ -150,7 +153,7 @@
         },
         {
           id: "gym",
-          name: "Физкультура",
+          name: "Кабинет Физкультуры",
           image: "https://www.screenflex.com/wp-content/uploads/2011/04/26-Gym-For-Portable-Partitions.jpg",
           equipmentTitle: "Оборудование спортзала:",
           equipment: [
@@ -159,6 +162,66 @@
             "Мячи для разных видов спорта",
             "Шведская стенка",
             "Баскетбольные кольца",
+          ],
+        },
+
+        {
+          id: "history",
+          name: "Кабинет Истории",
+          image: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Elementary_classroom_in_Alaska.jpg/1200px-Elementary_classroom_in_Alaska.jpg",
+          equipmentTitle: "Оборудование спортзала:",
+          equipment: [
+            "Пергамент",
+            "Гусиные перья",
+            "Печатные станки",
+            "Пишущие машинки",
+            "Археологические инструменты",
+          ],
+        },
+        {
+          id: "compyuter since",
+          name: "Кабинет Информатики",
+          image: "https://talgarlitsey.kz/wp-content/uploads/photo-gallery/informatics_classroom/IMG_20210215_154606.jpg?bwg=1613935693",
+          equipmentTitle: "Оборудование спортзала:",
+          equipment: [
+            "Компьютеры",
+            "Периферия",
+            "Сеть",
+            "Программное обеспечение",
+          ],
+        },
+        {
+          id: "english",
+          name: "Кабинет Иностранный языка",
+          image: "https://i0.wp.com/jennacopper.com/wp-content/uploads/2018/08/Picture12.png?resize=1024%2C682",
+          equipmentTitle: "Оборудование спортзала:",
+          equipment: [
+            "Учебные материалы",
+            "Технологии для изучения языков",
+            
+          ],
+        },
+        {
+          id: " literature",
+          name: "Кабинет Русский язык и литературы",
+          image: "https://www.promoteyourschool.co.uk/wp-content/uploads/2019/04/burnt-mill-academy-english-subject-wall-1.jpg",
+          equipmentTitle: "Оборудование спортзала:",
+          equipment: [
+            "Письменные принадлежности",
+            "Оборудование для печати",
+            "Аудио и видео оборудование",
+            ],
+        },
+        {
+          id: "Texnology",
+          name: "Кабинет Технологии",
+          image: "https://www.learningspacesolutions.com/wp-content/uploads/2023/02/reasons-upgrade-dt-classrooms.png",
+          equipmentTitle: "Оборудование спортзала:",
+          equipment: [
+            "Производственное оборудование",
+            "Измерительные приборы",
+            "Транспортные средства",
+            
           ],
         },
       ]);
@@ -172,6 +235,7 @@
       return {
         activeRoom,
         rooms,
+        isOpen
       };
     },
   };

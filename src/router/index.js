@@ -44,14 +44,16 @@ const router = createRouter({
           component: () => import("@/pages/dashboard/teachers/TeachersPage.vue")
         },
         {
-          path: 'teacher-info',
-          name: 'teacher info',
-          component: () => import("@/pages/dashboard/teachers/components/TeacherInfo.vue")
+          path: 'teachers/:id',
+          name: 'teacher-info',
+          component: () => import("@/pages/dashboard/teachers/TeacherInfo.vue")
         },
+        
         {
           path: 'messages',
           name: 'messages',
           component: () => import("@/pages/dashboard/messages/MessagesPage.vue")
+          
         },
         // path ichida 500 qaytarishga 
         {
@@ -61,6 +63,7 @@ const router = createRouter({
         },
       ]
     },
+    
     // globalno 500 qaytarishga 
     {
       path: '/500',
@@ -72,6 +75,8 @@ const router = createRouter({
       component: () => import('@/pages/_404.vue'),
       name: 'not_found_main'
     },
+   
+    
 
   ]
 })

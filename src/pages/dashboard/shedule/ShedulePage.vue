@@ -1,4 +1,5 @@
 <template>
+    
     <div class="calendar-container">
         <!-- Шапка календаря с навигацией -->
         <div class="calendar-header">

@@ -26,7 +26,7 @@
         <router-link to="classes">
             <a-menu-item key="2" :class="{ 'ant-menu-item-selected': $route.path === '/dashboard/classes' }">
                 <CheckSquareOutlined />
-                <span>Классы</span>
+                <span>Кабинеты</span>
             </a-menu-item>
         </router-link>
 
@@ -44,7 +44,7 @@
             </a-menu-item>
         </RouterLink>
 
-
+        
     </a-menu>
 </template>
 
