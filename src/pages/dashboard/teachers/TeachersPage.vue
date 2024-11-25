@@ -30,7 +30,11 @@
         <template #bodyCell="{ column, record }"></template>
       </a-table>
     </div>
-   
+    <div v-else-if="currentPage === 'info'">
+      <!-- Форма регистрации преподавателя -->
+      <teacher-info @close="togglePage" />
+      
+    </div>
     <div v-else-if="currentPage === 'form'">
       <!-- Форма регистрации преподавателя -->
       <teacher-registration-form @close="togglePage" />
@@ -62,7 +66,7 @@
   // Методы
   const togglePage = () => {
     currentPage.value = currentPage.value === "teachers" ? "form" : "teachers";
-    
+   
   };
   </script>
   
