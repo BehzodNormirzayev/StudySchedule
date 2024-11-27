@@ -12,6 +12,34 @@
         </div>
         <div class="user-details">
           <h1 class="user-name">{{ user.fullName }}</h1>
+          
+      <div class="content">
+      <!-- Left Section -->
+        <div class="left-section">
+          <h3>Примечание не задано</h3>
+          <div class="schedule">
+            <h4>Расписание на ближайшие 7 дней</h4>
+            <ul>
+             <li v-for="(schedule, index) in schedules" :key="index">
+              <span>{{ schedule.day }}</span>
+              <span>{{ schedule.time }}</span>
+              <span>{{ schedule.group }}</span>
+              <span>{{ schedule.duration }}</span>
+              </li>
+            </ul>
+        </div>
+        <div class="uploaded-files">
+          <h4>Загруженные файлы</h4>
+          <button @click="uploadFile">Загрузить новый</button>
+        </div>
+        <div class="comments">
+          <h4>Комментарии</h4>
+          <textarea v-model="newComment" placeholder="Добавьте комментарий"></textarea>
+          <button @click="addComment">Сохранить</button>
+        </div>
+        </div>
+      </div>
+
           <div class="location">
             <span class="location-icon">📍</span>
             {{ user.location }}
@@ -115,6 +143,7 @@ export default {
         age: '21',
         gender: 'Мужчина',
         avatar: null
+        
       },
       formData: {
         fullName: 'Нормирзаев Бехзод Журамирза угли',
@@ -140,6 +169,28 @@ export default {
 </script>
 
 <style scoped>
+
+.schedule {
+  margin-top: 20px;
+}
+
+.schedule ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.schedule li {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid #ddd; /* Border between rows */
+}
+
+.schedule li:last-child {
+  border-bottom: none; /* Remove border for the last item */
+}
+
 .profile-container {
   max-width: 1200px;
   margin: 0 auto;
