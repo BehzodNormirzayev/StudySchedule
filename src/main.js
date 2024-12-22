@@ -5,6 +5,7 @@ import './styles/base.scss'; // Import global SCSS here
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 
+
 // depends
 import App from './App.vue'
 import Antd from 'ant-design-vue';

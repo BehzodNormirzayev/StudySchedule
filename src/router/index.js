@@ -1,19 +1,15 @@
 import { createRouter, createWebHistory } from 'vue-router'
-
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
+   
+    // Страница Login должна быть первой
     {
-      path: '/login',
+      path: '/',
       name: 'Login',
       component: () => import('@/pages/LoginPage.vue')
     },
-    {
-      path: '/',
-      name: 'Asosiy sahifa',
-      redirect: "/dashboard"
-    },
-
+    
     {
       path: '/dashboard',
       name: 'dashboard',
@@ -21,42 +17,45 @@ const router = createRouter({
       children: [
         {
           path: '',
-          redirect: 'dashboard/lessons'
+          redirect: 'lessons'
         },
         {
           path: 'lessons',
           name: 'lessons',
-          component: () => import('@/pages/dashboard/lessons/LessonsPage.vue'),
+          component: () => import('@/pages/dashboard/lessons/LessonsPage.vue')
         },
         {
-          path: 'clients',
-          name: 'clients',
-          component: () => import("@/pages/dashboard/classes/ClassesPage.vue")
+          path: 'classes',
+          name: 'classes',
+          component: () => import('@/pages/dashboard/classes/ClassesPage.vue')
+        },
+        {
+          path: 'shedule',
+          name: 'shedule',
+          component: () => import('@/pages/dashboard/shedule/ShedulePage.vue')
         },
         {
           path: 'teachers',
           name: 'teachers',
-          component: () => import("@/pages/dashboard/teachers/TeachersPage.vue")
+          component: () => import('@/pages/dashboard/teachers/TeachersPage.vue')
         },
         {
-          path: 'teacher-info',
-          name: 'teacher info',
-          component: () => import("@/pages/dashboard/teachers/components/TeacherInfo.vue")
+          path: 'teachers/:id',
+          name: 'teacher-info',
+          component: () => import('@/pages/dashboard/teachers/TeacherInfo.vue')
         },
         {
-          path: 'tasks',
-          name: 'tasks',
-          component: () => import("@/pages/dashboard/messages/MessagesPage.vue")
+          path: 'messages',
+          name: 'messages',
+          component: () => import('@/pages/dashboard/messages/MessagesPage.vue')
         },
-        // path ichida 500 qaytarishga 
         {
           path: '500',
           component: () => import('@/pages/_500.vue'),
           name: 'dashboard_internal_server_error'
-        },
+        }
       ]
     },
-    // globalno 500 qaytarishga 
     {
       path: '/500',
       component: () => import('@/pages/_500.vue'),
@@ -66,10 +65,8 @@ const router = createRouter({
       path: '/404',
       component: () => import('@/pages/_404.vue'),
       name: 'not_found_main'
-    },
-
+    }
   ]
 })
 
 export default router
-

@@ -7,6 +7,14 @@
 
     <a-menu mode="inline" default-selected-keys="['1']">
 
+        <router-link to="shedule">
+            <a-menu-item key="1" :class="{ 'ant-menu-item-selected': $route.path === '/dashboard/shedule' }">
+                <ProfileOutlined />
+                <span>Расписания</span>
+                <a-badge count="6" style="margin-left: 8px" />
+            </a-menu-item>
+        </router-link>
+
         <router-link to="lessons">
             <a-menu-item key="1" :class="{ 'ant-menu-item-selected': $route.path === '/dashboard/lessons' }">
                 <ProfileOutlined />
@@ -15,15 +23,15 @@
             </a-menu-item>
         </router-link>
 
-        <router-link to="tasks">
-            <a-menu-item key="2" :class="{ 'ant-menu-item-selected': $route.path === '/dashboard/tasks' }">
+        <router-link to="classes">
+            <a-menu-item key="2" :class="{ 'ant-menu-item-selected': $route.path === '/dashboard/classes' }">
                 <CheckSquareOutlined />
-                <span>Классы</span>
+                <span>Кабинеты</span>
             </a-menu-item>
         </router-link>
 
-        <router-link to="clients">
-            <a-menu-item key="3" :class="{ 'ant-menu-item-selected': $route.path === '/dashboard/clients' }">
+        <router-link to="messages">
+            <a-menu-item key="3" :class="{ 'ant-menu-item-selected': $route.path === '/dashboard/messages' }">
                 <UserOutlined />
                 <span>Сообшение</span>
             </a-menu-item>
@@ -36,7 +44,7 @@
             </a-menu-item>
         </RouterLink>
 
-
+        
     </a-menu>
 </template>
 
