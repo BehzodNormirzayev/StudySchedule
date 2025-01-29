@@ -63,69 +63,10 @@
     </div>
 
     <!-- Update Button -->
-    <div class="update-button">
-      <button class="btn-update" @click="toggleForm">
-        ✏️ ОБНОВИТЬ ИНФОРМАЦИЮ
-      </button>
-    </div>
-
-    <!-- Main Form (conditionally rendered) -->
-    <form v-if="isFormVisible" @submit.prevent="handleSubmit" class="profile-form">
-      <!-- ФИО Field -->
-      <div class="form-group">
-        <label>ФИО <span class="required">*</span></label>
-        <input
-          type="text"
-          v-model="formData.fullName"
-          required
-        />
-      </div>
-
-      <!-- Gender Field -->
-      <div class="form-group">
-        <label>Пол <span class="required">*</span></label>
-        <select v-model="formData.gender" required>
-          <option value="Мужчина">Мужчина</option>
-          <option value="Женщина">Женщина</option>
-        </select>
-      </div>
-
-      <!-- Phone Field -->
-      <div class="form-group">
-        <label>Телефон</label>
-        <input
-          type="tel"
-          v-model="formData.phone"
-          pattern="\+[0-9]{3}-[0-9]{2}-[0-9]{3}-[0-9]{4}"
-          placeholder="+998-93-407-2925"
-        />
-      </div>
-
-      <!-- Password Change Checkbox -->
-      <div class="form-group">
-        <label class="checkbox-label">
-          <input
-            type="checkbox"
-            v-model="formData.changePassword"
-          />
-          Сменить пароль
-        </label>
-      </div>
+    
 
       <!-- Interface Language -->
-      <div class="form-group">
-        <label>Язык интерфейса</label>
-        <select v-model="formData.language">
-          <option value="Русский">Русский</option>
-          <option value="O'zbekcha">O'zbekcha</option>
-          <option value="English">English</option>
-        </select>
-      </div>
-
-      <button type="submit" class="btn-save">
-        Сохранить
-      </button>
-    </form>
+      
 
   </div>
 </template>

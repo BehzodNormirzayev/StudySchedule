@@ -1,7 +1,7 @@
 <template>
   <div class="login-form-container">
     <div class="form-container">
-   commit comment 
+   
       <form @submit.prevent="handleSubmit" class="space-y-4">
         <div>
           <label class="block text-white mb-2" for="email">Email</label>
@@ -60,14 +60,21 @@ const rememberMe = ref(false);
 const router = useRouter();
 
 const handleSubmit = () => {
-  // In a real application, you'd send the email and password to the backend here.
-  // Since this is a mockup, we simulate the login by checking the fields.
+  // Проверяем, заполнены ли поля email и password
   if (email.value && password.value) {
-    router.push('/dashboard/shedule');
+    // Логика для перенаправления на разные маршруты в зависимости от email
+    if (email.value === 'normirzaevbehzod89@gmail.com',password.value === 'admin') {
+      router.push('/dashboard/shedule');
+    } else if (email.value === 'uzbeka77792@gmail.com',password.value === 'teacher') {
+      router.push('/tutor/sheduletutor');
+    } else {
+      alert('Unknown email. Access denied.');
+    }
   } else {
     alert('Please fill out both email and password.');
   }
 };
+
 
 
 </script>

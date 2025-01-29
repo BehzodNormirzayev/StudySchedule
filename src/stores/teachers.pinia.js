@@ -5,7 +5,7 @@ export const useTeachersStore = defineStore('teachers', {
         teachersList: [
             {
                 id: 1,
-                fio: ' Begi Behzod Beki',
+                fio: ' Normirzayev Behzod ',
                 age: 32,
                 number: '99 080 00 00',
                 cafedra: 'Fiz-mat'

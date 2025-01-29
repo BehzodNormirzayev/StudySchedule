@@ -56,6 +56,35 @@ const router = createRouter({
         }
       ]
     },
+
+
+    {
+      path: '/tutor',
+      name: 'tutor',
+      component: () => import('@/pages/tutor/TutorPage.vue'),
+      children: [
+        {
+           path: 'sheduletutor',
+           name: 'sheduletutor',
+           component: () => import('@/pages/tutor/sheduletutor/SheduletutorPage.vue')
+        },
+        {
+          path: 'profile',
+          name: 'profile',
+          component: () => import('@/pages/tutor/profile/ProfilePage.vue')
+        },
+        {
+          path: 'messagestutor',
+          name: 'messagestutor',
+          component: () => import('@/pages/tutor/messagestutor/MessagestutorPage.vue')
+        },
+        {
+           path: '500',
+           component: () => import('@/pages/_500.vue'),
+           name: 'dashboard_internal_server_error'
+        }
+      ]
+    },
     {
       path: '/500',
       component: () => import('@/pages/_500.vue'),
