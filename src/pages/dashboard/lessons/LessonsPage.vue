@@ -1,153 +1,299 @@
 <template>
-    <div class="calendar-container">
-        <!-- Шапка календаря с навигацией -->
-        <div class="calendar-header">
-            <button @click="prevMonth">❮</button>
-            <span>{{ currentMonthYear }}</span>
-            <button @click="nextMonth">❯</button>
+    <div class="schedule-form">
+      <div class="form-header">
+        <h2>Групповой — запланировать</h2>
+        <button class="close-button" @click="$emit('close')">&times;</button>
+      </div>
+  
+      <form @submit.prevent="handleSubmit">
+        <!-- Date Field -->
+        <div class="form-group">
+          <label>Дата</label>
+          <div class="date-input">
+            <input
+              type="date"
+              v-model="formData.date"
+              :min="getCurrentDate()"
+            />
+            <span class="help-icon">?</span>
+          </div>
         </div>
-
-        <!-- Сетка с днями недели -->
-        <div class="calendar-grid">
-            <div v-for="day in daysOfWeek" :key="day" class="day-header">{{ day }}</div>
-
-            <!-- Ячейки для каждого дня месяца -->
-            <div v-for="day in daysInMonth" :key="day.date" class="calendar-day"
-                :class="{ 'other-month': !day.isCurrentMonth }">
-                <div class="day-number">{{ day.date.getDate() }}</div>
-
-                <!-- События внутри ячейки -->
-                <div class="events">
-                    <div v-for="event in day.events" :key="event.title + event.time" :class="['event', event.color]">
-                        {{ event.time }} - {{ event.title }}
-                    </div>
-                </div>
-
-                <!-- Показать дополнительные события -->
-                <div v-if="day.extraEvents" class="show-more">+{{ day.extraEvents }} (показать)</div>
+  
+        <!-- Time Field -->
+        <div class="form-group">
+          <label>Время <span class="required">*</span></label>
+          <div class="time-container">
+            <div class="time-input">
+              <input
+                type="text"
+                v-model="formData.hours"
+                placeholder="--"
+                maxlength="2"
+                @input="validateTimeInput"
+              />
+              <span>:</span>
+              <input
+                type="text"
+                v-model="formData.minutes"
+                placeholder="--"
+                maxlength="2"
+                @input="validateTimeInput"
+              />
             </div>
+            <div class="duration-input">
+              <input
+                type="number"
+                v-model="formData.duration"
+                min="1"
+                max="360"
+              />
+              <span>мин</span>
+            </div>
+          </div>
         </div>
+  
+        <!-- Classroom Field -->
+        <div class="form-group">
+          <label>Аудитория</label>
+          <div class="select-container">
+            <select v-model="formData.classroom">
+              <option value="" disabled selected>(не задан)</option>
+              <option v-for="room in classrooms" :key="room" :value="room">
+                {{ room }}
+              </option>
+            </select>
+            <span class="available-count">58 доступно</span>
+          </div>
+        </div>
+  
+        <!-- Group Field -->
+        <div class="form-group">
+          <label>Группа</label>
+          <input
+            type="text"
+            v-model="formData.group"
+            placeholder="Добавьте одну или несколько"
+          />
+        </div>
+  
+        <!-- Subject Field -->
+        <div class="form-group">
+          <label>Предмет <span class="required">*</span></label>
+          <select v-model="formData.subject" required>
+            <option value="Почемучка">Почемучка</option>
+            <option value="other">Other subjects...</option>
+          </select>
+        </div>
+  
+        <!-- Teacher Field -->
+        <div class="form-group">
+          <label>Педагог(и)</label>
+          <select v-model="formData.teacher">
+            <option value="" disabled selected>Выберите</option>
+            <option v-for="teacher in teachers" :key="teacher" :value="teacher">
+              {{ teacher }}
+            </option>
+          </select>
+        </div>
+  
+        <!-- Comment Field -->
+        <div class="form-group">
+          <label>Комментарий</label>
+          <input
+            type="text"
+            v-model="formData.comment"
+            placeholder="Например, задержится на 10 мин"
+          />
+        </div>
+  
+        <!-- Form Actions -->
+        <div class="form-actions">
+          <button type="button" class="btn-cancel" @click="$emit('close')">
+            Отмена
+          </button>
+          <button type="submit" class="btn-save">
+            Сохранить
+          </button>
+        </div>
+      </form>
     </div>
-</template>
-
-<script setup>
-import { ref, computed } from 'vue';
-
-const currentDate = ref(new Date());
-const daysOfWeek = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
-
-// Пример данных событий
-const eventsData = [
-    { date: '2024-10-01', time: '8:30', title: 'PRESIDENT_61', color: 'blue' },
-    { date: '2024-10-01', time: '8:30', title: 'MIDDLE_61', color: 'red' },
-    // Добавьте дополнительные события аналогично
-];
-
-// Генерация дней месяца с событиями
-const daysInMonth = computed(() => {
-    const days = [];
-    const year = currentDate.value.getFullYear();
-    const month = currentDate.value.getMonth();
-
-    const firstDayOfMonth = new Date(year, month, 1);
-    const lastDayOfMonth = new Date(year, month + 1, 0);
-    const startDayOfWeek = firstDayOfMonth.getDay() || 7;
-    const totalDays = startDayOfWeek + lastDayOfMonth.getDate() - 1;
-
-    for (let i = 1 - startDayOfWeek; i <= lastDayOfMonth.getDate(); i++) {
-        const date = new Date(year, month, i);
-        const isCurrentMonth = i > 0;
-        const dayEvents = eventsData.filter(event => event.date === date.toISOString().split('T')[0]);
-        const eventsToShow = dayEvents.slice(0, 5); // Показываем максимум 5 событий
-        const extraEvents = dayEvents.length > 5 ? dayEvents.length - 5 : 0;
-
-        days.push({ date, isCurrentMonth, events: eventsToShow, extraEvents });
+  </template>
+  
+  <script>
+  export default {
+    name: 'GroupScheduleForm',
+    data() {
+      return {
+        formData: {
+          date: this.getCurrentDate(),
+          hours: '',
+          minutes: '',
+          duration: 90,
+          classroom: '',
+          group: '',
+          subject: 'Почемучка',
+          teacher: '',
+          comment: ''
+        },
+        classrooms: ['Room 101', 'Room 102', 'Room 103'],
+        teachers: ['Teacher 1', 'Teacher 2', 'Teacher 3']
+      }
+    },
+    methods: {
+      getCurrentDate() {
+        const now = new Date()
+        return now.toISOString().split('T')[0]
+      },
+      validateTimeInput(event) {
+        const input = event.target
+        const value = input.value.replace(/[^0-9]/g, '')
+        
+        if (input === this.formData.hours) {
+          if (parseInt(value) > 23) {
+            this.formData.hours = '23'
+          } else {
+            this.formData.hours = value
+          }
+        } else {
+          if (parseInt(value) > 59) {
+            this.formData.minutes = '59'
+          } else {
+            this.formData.minutes = value
+          }
+        }
+      },
+      handleSubmit() {
+        // Validate required fields
+        if (!this.formData.hours || !this.formData.minutes || !this.formData.subject) {
+          alert('Please fill in all required fields')
+          return
+        }
+  
+        // Emit form data to parent component
+        this.$emit('submit', {
+          ...this.formData,
+          time: `${this.formData.hours}:${this.formData.minutes}`
+        })
+      }
     }
-    return days;
-});
-
-const currentMonthYear = computed(() =>
-    currentDate.value.toLocaleDateString('ru-RU', { year: 'numeric', month: 'long' })
-);
-
-function prevMonth() {
-    currentDate.value = new Date(currentDate.value.getFullYear(), currentDate.value.getMonth() - 1, 1);
-}
-
-function nextMonth() {
-    currentDate.value = new Date(currentDate.value.getFullYear(), currentDate.value.getMonth() + 1, 1);
-}
-</script>
-
-<style scoped>
-.calendar-container {
-    max-width: 1000px;
-    margin: auto;
-    text-align: center;
-}
-
-.calendar-header {
+  }
+  </script>
+  
+  <style scoped>
+  .schedule-form {
+    max-width: 600px;
+    padding: 20px;
+    background: white;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .form-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px;
-}
-
-.calendar-grid {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 5px;
-}
-
-.day-header {
-    padding: 5px;
-    text-align: center;
-    font-weight: bold;
-    background-color: #f3f4f6;
-}
-
-.calendar-day {
-    border: 1px solid #ddd;
-    min-height: 120px;
-    position: relative;
-    padding: 5px;
-}
-
-.other-month {
-    background-color: #f0f0f0;
-    color: #aaa;
-}
-
-.day-number {
-    font-size: 14px;
-    font-weight: bold;
-    margin-bottom: 5px;
-}
-
-.events {
-    text-align: left;
-    font-size: 12px;
-}
-
-.event {
-    padding: 2px;
-    border-radius: 4px;
-    margin-bottom: 2px;
-    color: white;
-}
-
-.blue {
-    background-color: #007bff;
-}
-
-.red {
-    background-color: #dc3545;
-}
-
-/* Добавляем еще цвета, если необходимо */
-.show-more {
-    font-size: 10px;
-    color: #007bff;
+    margin-bottom: 20px;
+  }
+  
+  .close-button {
+    background: none;
+    border: none;
+    font-size: 24px;
     cursor: pointer;
-}
-</style>
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+  }
+  
+  .required {
+    color: red;
+  }
+  
+  input, select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  .time-container {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .time-input {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  .time-input input {
+    width: 50px;
+    text-align: center;
+  }
+  
+  .duration-input {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  .duration-input input {
+    width: 70px;
+  }
+  
+  .select-container {
+    position: relative;
+  }
+  
+  .available-count {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #666;
+    font-size: 0.9em;
+  }
+  
+  .form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  
+  .btn-cancel {
+    padding: 8px 16px;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .btn-save {
+    padding: 8px 16px;
+    background: #4A90E2;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .help-icon {
+    color: #4A90E2;
+    cursor: pointer;
+    margin-left: 5px;
+  }
+  
+  .date-input {
+    display: flex;
+    align-items: center;
+  }
+  </style>
