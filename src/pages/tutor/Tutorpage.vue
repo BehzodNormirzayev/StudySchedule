@@ -1,7 +1,7 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
-import HeaderComponent from '@/components/Header.vue';
-import AsideComponent from '@/components/Aside.vue';
+import HeaderComponent from '@/components/Headertutor.vue';
+import AsideComponent from '@/components/Asidetutor.vue';
 
 
 
@@ -39,7 +39,6 @@ const siderStyle = {
 
 <style scoped>
 :deep(.ant-layout .ant-layout-header) {
-    
     height: 72px;
     line-height: 72px;
 }
